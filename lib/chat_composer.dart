@@ -1,17 +1,63 @@
-// You have generated a new plugin project without
-// specifying the `--platforms` flag. A plugin project supports no platforms is generated.
-// To add platforms, run `flutter create -t plugin --platforms <platforms> .` under the same
-// directory. You can also find a detailed instruction on how to add platforms in the `pubspec.yaml` at https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms.
+import 'message_field.dart';
+import 'package:flutter/material.dart';
+import 'package:chat_composer/send_button.dart';
 
-import 'dart:async';
+class ChatComposer extends StatefulWidget {
+  const ChatComposer({Key? key}) : super(key: key);
 
-import 'package:flutter/services.dart';
+  @override
+  _ChatComposerState createState() => _ChatComposerState();
+}
 
-class ChatComposer {
-  static const MethodChannel _channel = MethodChannel('chat_composer');
+class _ChatComposerState extends State<ChatComposer>
+    with SingleTickerProviderStateMixin {
+  final double composerHeight = 58;
+  late double screenHeight;
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  @override
+  Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: Stack(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: composerHeight),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            MessageField(height: composerHeight),
+                          ],
+                        ),
+                        margin: EdgeInsets.zero,
+                        decoration: const BoxDecoration(
+                          // color: Color(accentColor2),
+                          color: Colors.red,
+                          borderRadius: BorderRadius.all(Radius.circular(18)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: composerHeight + 8),
+                ],
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: SendButton(composerHeight: composerHeight),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
