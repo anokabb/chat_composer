@@ -1,4 +1,5 @@
 import 'package:chat_composer/chat_composer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,19 +14,68 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  List<String> list = [];
+  TextEditingController con = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          centerTitle: true,
+          title: const Text('Chat Composer'),
         ),
         body: Column(
           children: [
-            const Expanded(child: Text('Running on: ')),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (_, pos) {
+                    return ListTile(title: Text(list[pos]));
+                  }),
+            ),
             ChatComposer(
-              onRecordEnd: (dddd) {},
-              onReceiveText: (str) {},
+              controller: con,
+              onReceiveText: (str) {
+                setState(() {
+                  list.add('TEXT : ' + str!);
+                  con.text = '';
+                });
+              },
+              onRecordEnd: (path) {
+                setState(() {
+                  list.add('AUDIO PATH : ' + path!);
+                });
+              },
+              textPadding: EdgeInsets.zero,
+              leading: CupertinoButton(
+                padding: EdgeInsets.zero,
+                child: const Icon(
+                  Icons.insert_emoticon_outlined,
+                  size: 25,
+                  color: Colors.grey,
+                ),
+                onPressed: () {},
+              ),
+              actions: [
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: const Icon(
+                    Icons.attach_file_rounded,
+                    size: 25,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {},
+                ),
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: const Icon(
+                    Icons.camera_alt_rounded,
+                    size: 25,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
             ),
           ],
         ),
@@ -33,38 +83,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-// CupertinoButton(
-          //   child: const Icon(
-          //     Icons.insert_emoticon_outlined,
-          //     size: 25,
-          //     color: Colors.grey,
-          //   ),
-          //   onPressed: () {},
-          // ),
-
-
-           // [
-                  //     Padding(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //       child: InkWell(
-                  //         child: const Icon(
-                  //           Icons.camera_alt_outlined,
-                  //           size: 25,
-                  //           color: Colors.grey,
-                  //         ),
-                  //         onTap: () => sendImage(ImageType.Camera, context),
-                  //       ),
-                  //     ),
-                  //     Padding(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //       child: InkWell(
-                  //         child: const Icon(
-                  //           Icons.image_outlined,
-                  //           size: 25,
-                  //           color: Colors.grey,
-                  //         ),
-                  //         onTap: () => sendImage(ImageType.Gallery, context),
-                  //       ),
-                  //     ),
-                  //   ]

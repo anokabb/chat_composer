@@ -35,6 +35,16 @@ class MessageField extends StatefulWidget {
 
 class _MessageFieldState extends State<MessageField> {
   @override
+  void initState() {
+    localController.addListener(() {
+      context
+          .read<RecordAudioCubit>()
+          .toggleRecord(canRecord: localController.text.isEmpty);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: composerHeight),
