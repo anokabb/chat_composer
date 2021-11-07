@@ -1,9 +1,82 @@
+import 'package:chat_composer/consts/consts.dart';
+import 'package:chat_composer/cubit/recordaudio_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'message_field.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_composer/send_button.dart';
 
 class ChatComposer extends StatefulWidget {
-  const ChatComposer({Key? key}) : super(key: key);
+  final FocusNode? focusNode;
+  final TextEditingController? controller;
+  final Widget? leading;
+  final List<Widget>? actions;
+  final TextCapitalization? textCapitalization;
+  final TextInputAction? textInputAction;
+  final TextInputType? keyboardType;
+  final TextStyle? textStyle;
+  final InputDecoration? decoration;
+  final EdgeInsetsGeometry? textPadding;
+  //Consts
+  final double? borderRadius;
+  final List<BoxShadow>? shadow;
+  final Color? backgroundColor;
+  final Color? composerColor;
+  final Color? actionsColor;
+  final Color? sendButtonColor;
+  final Color? sendButtonBackgroundColor;
+  final Color? lockColor;
+  final Color? lockBackgroundColor;
+  final Color? recordIconColor;
+  final Color? deleteButtonColor;
+  final Color? textColor;
+  final EdgeInsetsGeometry? padding;
+  final IconData? sendIcon;
+  final IconData? recordIcon;
+
+  ChatComposer(
+      {Key? key,
+      this.focusNode,
+      this.controller,
+      this.leading,
+      this.actions,
+      this.textCapitalization,
+      this.textInputAction,
+      this.keyboardType,
+      this.textStyle,
+      this.decoration,
+      this.textPadding,
+      this.backgroundColor,
+      this.composerColor,
+      this.actionsColor,
+      this.sendButtonColor,
+      this.sendButtonBackgroundColor,
+      this.lockColor,
+      this.lockBackgroundColor,
+      this.recordIconColor,
+      this.deleteButtonColor,
+      this.textColor,
+      this.padding,
+      this.sendIcon,
+      this.recordIcon,
+      this.borderRadius,
+      this.shadow})
+      : super(key: key) {
+    localBackgroundColor = backgroundColor ?? localBackgroundColor;
+    localComposerColor = composerColor ?? localComposerColor;
+    localActionsColor = actionsColor ?? localActionsColor;
+    localSendButtonColor = sendButtonColor ?? localSendButtonColor;
+    localSendButtonBackgroundColor =
+        sendButtonBackgroundColor ?? localSendButtonBackgroundColor;
+    localLockColor = lockColor ?? localLockColor;
+    localLockBackgroundColor = lockBackgroundColor ?? localLockBackgroundColor;
+    localRecordIconColor = recordIconColor ?? localRecordIconColor;
+    localDeleteButtonColor = deleteButtonColor ?? localDeleteButtonColor;
+    localTextColor = textColor ?? localTextColor;
+    localPadding = padding ?? localPadding;
+    localSendIcon = sendIcon ?? localSendIcon;
+    localRecordIcon = recordIcon ?? localRecordIcon;
+    localborderRadius = borderRadius ?? localborderRadius;
+  }
 
   @override
   _ChatComposerState createState() => _ChatComposerState();
@@ -11,16 +84,14 @@ class ChatComposer extends StatefulWidget {
 
 class _ChatComposerState extends State<ChatComposer>
     with SingleTickerProviderStateMixin {
-  final double composerHeight = 58;
-  late double screenHeight;
-
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+    return BlocProvider(
+      create: (_) => RecordAudioCubit(),
+      child: Container(
+        color: localBackgroundColor,
+        child: Padding(
+          padding: localPadding,
           child: Stack(
             children: [
               Row(
@@ -28,27 +99,34 @@ class _ChatComposerState extends State<ChatComposer>
                 children: [
                   Expanded(
                     child: ConstrainedBox(
-                      constraints: BoxConstraints(minHeight: composerHeight),
+                      constraints:
+                          const BoxConstraints(minHeight: composerHeight),
                       child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            MessageField(height: composerHeight),
-                          ],
+                        child: MessageField(
+                          controller: widget.controller,
+                          focusNode: widget.focusNode,
+                          keyboardType: widget.keyboardType,
+                          textCapitalization: widget.textCapitalization,
+                          textInputAction: widget.textInputAction,
+                          textPadding: widget.textPadding,
+                          textStyle: widget.textStyle,
+                          decoration: widget.decoration,
+                          leading: widget.leading,
+                          actions: widget.actions,
                         ),
                         margin: EdgeInsets.zero,
-                        decoration: const BoxDecoration(
-                          // color: Color(accentColor2),
-                          color: Colors.red,
-                          borderRadius: BorderRadius.all(Radius.circular(18)),
-                        ),
+                        decoration: BoxDecoration(
+                            color: localComposerColor,
+                            borderRadius:
+                                BorderRadius.circular(localborderRadius),
+                            boxShadow: widget.shadow),
                       ),
                     ),
                   ),
-                  SizedBox(width: composerHeight + 8),
+                  const SizedBox(width: composerHeight),
                 ],
               ),
-              Positioned(
+              const Positioned(
                 bottom: 0,
                 right: 0,
                 left: 0,
@@ -57,7 +135,7 @@ class _ChatComposerState extends State<ChatComposer>
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

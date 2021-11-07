@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:chat_composer/consts/colors.dart';
+import 'package:chat_composer/consts/consts.dart';
 import 'package:chat_composer/cubit/recordaudio_cubit.dart';
 import 'package:chat_composer/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,8 +19,6 @@ class SendButton extends StatefulWidget {
 
 class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
   final Stopwatch stopwatch = Stopwatch();
-
-  ///
   late Animation<double> sizeAnimation,
       posAnimation1,
       posAnimation2,
@@ -32,8 +30,6 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
   ValueNotifier<double> sizeListener = ValueNotifier(1);
   ValueNotifier<double> micPosListener = ValueNotifier(0);
   ValueNotifier<double> deletePosListener = ValueNotifier(30);
-
-  ///
   ValueNotifier<bool> dragLocked = ValueNotifier(false);
   ValueNotifier<List<double>> posValueListener = ValueNotifier([1, 0]);
   double _horizontalPos = 1, _verticalPos = 0, lockPos = -25, cancelPos = 0.6;
@@ -42,8 +38,6 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
-    ///
     recordAnimation = AnimationController(
         duration: const Duration(milliseconds: 100), vsync: this);
     rotationAnimation = AnimationController(
@@ -71,8 +65,6 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
     rotateAnimation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
         parent: rotationAnimation, curve: Curves.fastOutSlowIn));
 
-    ///
-
     context.read<RecordAudioCubit>().stream.listen((event) {
       if (event is RecordAudioStarted) {
         recordAnimation.forward();
@@ -98,7 +90,6 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
     } else {
       axis = DragAxis.vertical;
     }
-    // log('${_horizontalPos}');
     if (_horizontalPos < 0.96) axis = DragAxis.horizontal;
     if (axis == DragAxis.horizontal && _horizontalPos > 1) return null;
     return axis;
@@ -193,9 +184,7 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                         valueListenable: dragLocked,
                         builder: (_, locked, __) {
                           return SendType(
-                            icon: locked
-                                ? Icons.send_rounded
-                                : Icons.mic_none_outlined,
+                            icon: locked ? localSendIcon : localRecordIcon,
                             height: widget.composerHeight,
                           );
                         }),
@@ -224,12 +213,17 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                       Alignment((value[0] * 0.7) * 2 - 1, 0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
-                                    children: const [
-                                      Icon(Icons.arrow_back_ios, size: 20),
+                                    children: [
+                                      Icon(
+                                        Icons.arrow_back_ios,
+                                        size: 20,
+                                        color: localTextColor,
+                                      ),
                                       Text(
                                         'Slide to cancel',
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 16),
+                                            color: localTextColor,
+                                            fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -256,9 +250,10 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                                         Alignment(0, value),
                                                     child: RotationTransition(
                                                       turns: rotateAnimation,
-                                                      child: const Icon(
+                                                      child: Icon(
                                                         Icons.mic_rounded,
-                                                        color: Color(pinkColor),
+                                                        color:
+                                                            localRecordIconColor,
                                                         size: 28,
                                                       ),
                                                     ),
@@ -270,15 +265,20 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                                       deletePosListener,
                                                   builder: (_, value, __) {
                                                     return Align(
-                                                      alignment:
-                                                          Alignment(0, value),
-                                                      child: Image.asset(
-                                                        'assets/images/delete_icon.png',
-                                                        width: 40,
-                                                        height: 40,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    );
+                                                        alignment:
+                                                            Alignment(0, value),
+                                                        child: Icon(
+                                                          Icons.delete_rounded,
+                                                          color:
+                                                              localActionsColor,
+                                                        )
+                                                        // Image.asset(
+                                                        //   'assets/delete_icon.png',
+                                                        //   width: 40,
+                                                        //   height: 40,
+                                                        //   color: Colors.grey,
+                                                        // ),
+                                                        );
                                                   }),
                                             ],
                                           ),
@@ -289,12 +289,13 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                               .currentDuration,
                                           builder: (_, value, __) {
                                             return Container(
-                                              color: const Color(accentColor2),
+                                              color: localComposerColor,
                                               child: Text(
                                                 printDuration(value),
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                                    fontSize: 20,
+                                                    color: localTextColor),
                                               ),
                                             );
                                           },
@@ -306,9 +307,9 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                     CupertinoButton(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16),
-                                      child: const Icon(
+                                      child: Icon(
                                         Icons.delete_rounded,
-                                        color: Color(pinkColor),
+                                        color: localDeleteButtonColor,
                                         size: 28,
                                       ),
                                       onPressed: () {
@@ -323,10 +324,10 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                           ),
                           margin:
                               EdgeInsets.only(right: widget.composerHeight + 8),
-                          decoration: const BoxDecoration(
-                              color: Color(accentColor2),
+                          decoration: BoxDecoration(
+                              color: localComposerColor,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(18))),
+                                  const BorderRadius.all(Radius.circular(18))),
                         ),
                       Align(
                         alignment: Alignment(1, lockPos),
@@ -342,10 +343,13 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                       : value == 1
                                           ? 0
                                           : ((value / 2)),
-                                  child: const Card(
-                                    child: Icon(Icons.lock_outline),
-                                    shape: CircleBorder(),
-                                    color: Color(accentColor2),
+                                  child: Card(
+                                    child: Icon(
+                                      Icons.lock_outline,
+                                      color: localLockColor,
+                                    ),
+                                    shape: const CircleBorder(),
+                                    color: localLockBackgroundColor,
                                   ),
                                 );
                               }),
@@ -355,7 +359,7 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                         Align(
                           alignment: const Alignment(1, 0),
                           child: SendType(
-                            icon: Icons.send_rounded,
+                            icon: localSendIcon,
                             height: widget.composerHeight,
                             onTap: () {
                               print('🟢 send send send');
@@ -420,12 +424,12 @@ class SendType extends StatelessWidget {
         height: height - 8,
         child: Icon(
           icon,
-          color: Colors.white,
+          color: localSendButtonColor,
           size: 28,
         ),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Color(pinkColor),
+          color: localSendButtonBackgroundColor,
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:chat_composer/consts/consts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,13 +7,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'cubit/recordaudio_cubit.dart';
 
 class MessageField extends StatefulWidget {
-  final List<Widget>? actions;
-  final double height;
   final FocusNode? focusNode;
   final TextEditingController? controller;
+  final Widget? leading;
+  final List<Widget>? actions;
+  final TextCapitalization? textCapitalization;
+  final TextInputAction? textInputAction;
+  final TextInputType? keyboardType;
+  final TextStyle? textStyle;
+  final InputDecoration? decoration;
+  final EdgeInsetsGeometry? textPadding;
 
-  const MessageField(
-      {required this.height, this.actions, this.focusNode, this.controller});
+  const MessageField({
+    this.actions,
+    this.focusNode,
+    this.controller,
+    this.leading,
+    this.textCapitalization,
+    this.textInputAction,
+    this.keyboardType,
+    this.textStyle,
+    this.decoration,
+    this.textPadding,
+  });
   @override
   _MessageFieldState createState() => _MessageFieldState();
 }
@@ -21,39 +38,49 @@ class _MessageFieldState extends State<MessageField> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: widget.height),
+      constraints: const BoxConstraints(minHeight: composerHeight),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          CupertinoButton(
-            child: const Icon(
-              Icons.insert_emoticon_outlined,
-              size: 25,
-              color: Colors.grey,
-            ),
-            onPressed: () {},
-          ),
+          if (widget.leading != null) widget.leading!,
+          // CupertinoButton(
+          //   child: const Icon(
+          //     Icons.insert_emoticon_outlined,
+          //     size: 25,
+          //     color: Colors.grey,
+          //   ),
+          //   onPressed: () {},
+          // ),
           Expanded(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxHeight: 160),
-              child: TextField(
-                focusNode: widget.focusNode,
-                controller: widget.controller,
-                textCapitalization: TextCapitalization.sentences,
-                textInputAction: TextInputAction.newline,
-                keyboardType: TextInputType.multiline,
-                style: const TextStyle(color: Colors.black),
-                autofocus: false,
-                maxLines: null,
-                onChanged: (s) {
-                  context
-                      .read<RecordAudioCubit>()
-                      .toggleRecord(canRecord: s.isEmpty);
-                },
-                decoration: const InputDecoration(
-                    hintText: 'Type your message...',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none),
+              child: Padding(
+                padding: widget.textPadding ??
+                    const EdgeInsets.symmetric(horizontal: 8),
+                child: TextField(
+                  focusNode: widget.focusNode,
+                  controller: widget.controller,
+                  textCapitalization:
+                      widget.textCapitalization ?? TextCapitalization.sentences,
+                  textInputAction:
+                      widget.textInputAction ?? TextInputAction.newline,
+                  keyboardType: widget.keyboardType ?? TextInputType.multiline,
+                  style:
+                      widget.textStyle ?? const TextStyle(color: Colors.black),
+                  autofocus: false,
+                  maxLines: null,
+                  onChanged: (s) {
+                    context
+                        .read<RecordAudioCubit>()
+                        .toggleRecord(canRecord: s.isEmpty);
+                  },
+                  decoration: widget.decoration ??
+                      const InputDecoration(
+                        hintText: 'Type your message...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                      ),
+                ),
               ),
             ),
           ),
@@ -64,8 +91,7 @@ class _MessageFieldState extends State<MessageField> {
                   return Row(
                     children: widget.actions!,
                   );
-                  // return Row(
-                  //   children: [
+                  // [
                   //     Padding(
                   //       padding: const EdgeInsets.symmetric(horizontal: 4),
                   //       child: InkWell(
@@ -88,8 +114,7 @@ class _MessageFieldState extends State<MessageField> {
                   //         onTap: () => sendImage(ImageType.Gallery, context),
                   //       ),
                   //     ),
-                  //   ],
-                  // );
+                  //   ]
                 }
                 return Container();
               },

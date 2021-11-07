@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:chat_composer/chat_composer.dart';
 
 void main() {
@@ -24,8 +21,8 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Column(
-          children: const [
-            Expanded(child: Text('Running on: ')),
+          children: [
+            const Expanded(child: Text('Running on: ')),
             ChatComposer(),
           ],
         ),
