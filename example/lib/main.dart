@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:chat_composer/chat_composer.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,10 +23,58 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: [
             const Expanded(child: Text('Running on: ')),
-            ChatComposer(),
+            ChatComposer(
+              onRecordCancel: () {
+                print('onRecordCancel');
+              },
+              onRecordStart: () {
+                print('onRecordStart');
+              },
+              onRecordEnd: (dddd) {
+                print('onReceiveAudio :::::   $dddd');
+              },
+              onReceiveText: (str) {
+                print('ddddddddd :::::   $str');
+              },
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+// CupertinoButton(
+          //   child: const Icon(
+          //     Icons.insert_emoticon_outlined,
+          //     size: 25,
+          //     color: Colors.grey,
+          //   ),
+          //   onPressed: () {},
+          // ),
+
+
+           // [
+                  //     Padding(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
+                  //       child: InkWell(
+                  //         child: const Icon(
+                  //           Icons.camera_alt_outlined,
+                  //           size: 25,
+                  //           color: Colors.grey,
+                  //         ),
+                  //         onTap: () => sendImage(ImageType.Camera, context),
+                  //       ),
+                  //     ),
+                  //     Padding(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
+                  //       child: InkWell(
+                  //         child: const Icon(
+                  //           Icons.image_outlined,
+                  //           size: 25,
+                  //           color: Colors.grey,
+                  //         ),
+                  //         onTap: () => sendImage(ImageType.Gallery, context),
+                  //       ),
+                  //     ),
+                  //   ]

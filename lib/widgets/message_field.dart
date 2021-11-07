@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'cubit/recordaudio_cubit.dart';
+import '../cubit/recordaudio_cubit.dart';
 
 class MessageField extends StatefulWidget {
   final FocusNode? focusNode;
@@ -43,14 +42,6 @@ class _MessageFieldState extends State<MessageField> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           if (widget.leading != null) widget.leading!,
-          // CupertinoButton(
-          //   child: const Icon(
-          //     Icons.insert_emoticon_outlined,
-          //     size: 25,
-          //     color: Colors.grey,
-          //   ),
-          //   onPressed: () {},
-          // ),
           Expanded(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxHeight: 160),
@@ -91,30 +82,6 @@ class _MessageFieldState extends State<MessageField> {
                   return Row(
                     children: widget.actions!,
                   );
-                  // [
-                  //     Padding(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //       child: InkWell(
-                  //         child: const Icon(
-                  //           Icons.camera_alt_outlined,
-                  //           size: 25,
-                  //           color: Colors.grey,
-                  //         ),
-                  //         onTap: () => sendImage(ImageType.Camera, context),
-                  //       ),
-                  //     ),
-                  //     Padding(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //       child: InkWell(
-                  //         child: const Icon(
-                  //           Icons.image_outlined,
-                  //           size: 25,
-                  //           color: Colors.grey,
-                  //         ),
-                  //         onTap: () => sendImage(ImageType.Gallery, context),
-                  //       ),
-                  //     ),
-                  //   ]
                 }
                 return Container();
               },

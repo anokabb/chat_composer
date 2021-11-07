@@ -10,8 +10,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 enum DragAxis { horizontal, vertical }
 
 class SendButton extends StatefulWidget {
+  final Function(String?) onReceiveText;
   final double composerHeight;
-  const SendButton({required this.composerHeight});
+  const SendButton({required this.composerHeight, required this.onReceiveText});
 
   @override
   _SendButtonState createState() => _SendButtonState();
@@ -107,6 +108,7 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                     is RecordAudioStarted)) {
               context.read<RecordAudioCubit>().stopRecord(context);
               dragLocked.value = false;
+
               return;
             }
             dragLocked.value = false;
@@ -122,7 +124,6 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
             if (axis == DragAxis.vertical) {
               posValueListener.value = [1, _verticalPos];
               if (_verticalPos <= lockPos) {
-                log('lock record');
                 dragLocked.value = true;
                 _verticalPos = 0;
                 _horizontalPos = 1;
@@ -361,7 +362,13 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                             icon: localSendIcon,
                             height: widget.composerHeight,
                             onTap: () {
-                              print('🟢 send send send');
+                              String msg = localController.text.trim();
+                              if (msg.isNotEmpty) {
+                                print('[chat_composer] 🟢 text "$msg"');
+                                widget.onReceiveText(msg);
+                              } else {
+                                print('[chat_composer] 🔴 Text Empty');
+                              }
                             },
                           ),
                         )

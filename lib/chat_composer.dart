@@ -1,9 +1,9 @@
 import 'package:chat_composer/consts/consts.dart';
 import 'package:chat_composer/cubit/recordaudio_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'message_field.dart';
+import 'widgets/message_field.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_composer/send_button.dart';
+import 'package:chat_composer/widgets/send_button.dart';
 
 class ChatComposer extends StatefulWidget {
   final FocusNode? focusNode;
@@ -16,6 +16,11 @@ class ChatComposer extends StatefulWidget {
   final TextStyle? textStyle;
   final InputDecoration? decoration;
   final EdgeInsetsGeometry? textPadding;
+  final Function(String?) onReceiveText;
+  final Function()? onRecordStart;
+  final Function(String?) onRecordEnd;
+  final Function()? onRecordCancel;
+
   //Consts
   final double? borderRadius;
   final List<BoxShadow>? shadow;
@@ -32,33 +37,37 @@ class ChatComposer extends StatefulWidget {
   final IconData? sendIcon;
   final IconData? recordIcon;
 
-  ChatComposer(
-      {Key? key,
-      this.focusNode,
-      this.controller,
-      this.leading,
-      this.actions,
-      this.textCapitalization,
-      this.textInputAction,
-      this.keyboardType,
-      this.textStyle,
-      this.decoration,
-      this.textPadding,
-      this.backgroundColor,
-      this.composerColor,
-      this.sendButtonColor,
-      this.sendButtonBackgroundColor,
-      this.lockColor,
-      this.lockBackgroundColor,
-      this.recordIconColor,
-      this.deleteButtonColor,
-      this.textColor,
-      this.padding,
-      this.sendIcon,
-      this.recordIcon,
-      this.borderRadius,
-      this.shadow})
-      : super(key: key) {
+  ChatComposer({
+    Key? key,
+    required this.onReceiveText,
+    required this.onRecordEnd,
+    this.onRecordStart,
+    this.onRecordCancel,
+    this.focusNode,
+    this.controller,
+    this.leading,
+    this.actions,
+    this.textCapitalization,
+    this.textInputAction,
+    this.keyboardType,
+    this.textStyle,
+    this.decoration,
+    this.textPadding,
+    this.backgroundColor,
+    this.composerColor,
+    this.sendButtonColor,
+    this.sendButtonBackgroundColor,
+    this.lockColor,
+    this.lockBackgroundColor,
+    this.recordIconColor,
+    this.deleteButtonColor,
+    this.textColor,
+    this.padding,
+    this.sendIcon,
+    this.recordIcon,
+    this.borderRadius,
+    this.shadow,
+  }) : super(key: key) {
     localBackgroundColor = backgroundColor ?? localBackgroundColor;
     localComposerColor = composerColor ?? localComposerColor;
     localSendButtonColor = sendButtonColor ?? localSendButtonColor;
@@ -73,6 +82,7 @@ class ChatComposer extends StatefulWidget {
     localSendIcon = sendIcon ?? localSendIcon;
     localRecordIcon = recordIcon ?? localRecordIcon;
     localborderRadius = borderRadius ?? localborderRadius;
+    localController = controller ?? localController;
   }
 
   @override
@@ -84,7 +94,11 @@ class _ChatComposerState extends State<ChatComposer>
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => RecordAudioCubit(),
+      create: (_) => RecordAudioCubit(
+        onRecordEnd: widget.onRecordEnd,
+        onRecordCancel: widget.onRecordCancel,
+        onRecordStart: widget.onRecordStart,
+      ),
       child: Container(
         color: localBackgroundColor,
         child: Padding(
@@ -100,7 +114,7 @@ class _ChatComposerState extends State<ChatComposer>
                           const BoxConstraints(minHeight: composerHeight),
                       child: Container(
                         child: MessageField(
-                          controller: widget.controller,
+                          controller: localController,
                           focusNode: widget.focusNode,
                           keyboardType: widget.keyboardType,
                           textCapitalization: widget.textCapitalization,
@@ -123,11 +137,14 @@ class _ChatComposerState extends State<ChatComposer>
                   const SizedBox(width: composerHeight),
                 ],
               ),
-              const Positioned(
+              Positioned(
                 bottom: 0,
                 right: 0,
                 left: 0,
-                child: SendButton(composerHeight: composerHeight),
+                child: SendButton(
+                  composerHeight: composerHeight,
+                  onReceiveText: widget.onReceiveText,
+                ),
               ),
             ],
           ),

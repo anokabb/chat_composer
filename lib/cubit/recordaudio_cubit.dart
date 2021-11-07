@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,18 +12,23 @@ part 'recordaudio_state.dart';
 class RecordAudioCubit extends Cubit<RecordaudioState> {
   late FlutterAudioRecorder2? recorder;
   late Timer timer;
+  final Function()? onRecordStart;
+  final Function(String?) onRecordEnd;
+  final Function()? onRecordCancel;
 
   ValueNotifier<Duration?> currentDuration = ValueNotifier(Duration.zero);
 
-  RecordAudioCubit() : super(RecordAudioReady());
+  RecordAudioCubit({
+    required this.onRecordEnd,
+    this.onRecordStart,
+    this.onRecordCancel,
+  }) : super(RecordAudioReady());
 
   void toggleRecord({required bool canRecord}) {
-    log('toggle record');
     emit(canRecord ? RecordAudioReady() : RecordAudioClosed());
   }
 
   void startRecord(BuildContext context) async {
-    log('startRecord');
     try {
       recorder!.stop();
     } catch (e) {}
@@ -36,10 +40,10 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
       if (!hasStorage || !hasMic) {
         if (!hasStorage) await Permission.storage.request();
         if (!hasMic) await Permission.microphone.request();
+        print('[chat_composer] 🔴 Denied permissions');
         return;
       }
-
-      // context.read<AudioPlayerCubit>().stop();
+      if (onRecordStart != null) onRecordStart!();
 
       Directory dir = await getApplicationDocumentsDirectory();
       String path =
@@ -56,7 +60,7 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
         currentDuration.value = current!.duration;
         if (current.duration != null) {
           if (current.duration!.inMilliseconds >= (90 * 1000)) {
-            log('audio max length');
+            print('[chat_composer] 🔴 Audio passed max length');
             stopRecord(context);
           }
         }
@@ -69,28 +73,20 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
   }
 
   void stopRecord(BuildContext context) async {
-    log('stopRecord');
     timer.cancel();
     try {
       Recording? result = await recorder!.stop();
       if (result != null) {
         Duration? duration = result.duration;
         if (duration != null && result.path!.isNotEmpty) {
-          log('audio path : ' + result.path.toString());
-          if (duration.inMilliseconds > 300) {
-            // context.read<ConversationBloc>().add(MessageAdded(
-            //       Message(
-            //         text: 'Send Audio',
-            //         type: Message_Audio_Type,
-            //         temporaryAudioPath: result.path,
-            //         audioDuration: duration.inMilliseconds,
-            //       ),
-            //       context.read<ReplyCubit>().state,
-            //     ));
+          if (duration.inMilliseconds > 200) {
+            print('[chat_composer] 🟢 Audio path:  "${result.path}"');
+            onRecordEnd(result.path);
+          } else {
+            print('[chat_composer] 🔴 Audio too short');
           }
         }
       }
-    } catch (e) {
     } finally {
       currentDuration.value = Duration.zero;
       // context.read<ReplyCubit>().closeReply();
@@ -99,20 +95,19 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
   }
 
   void cancelRecord() async {
-    log('cancelRecord');
     try {
       timer.cancel();
     } catch (e) {}
     try {
       recorder!.stop();
     } catch (e) {}
+    if (onRecordCancel != null) onRecordCancel!();
     emit(RecordAudioReady());
     currentDuration.value = Duration.zero;
   }
 
   @override
   Future<void> close() {
-    log('Record cubit closed');
     try {
       recorder!.stop();
     } catch (e) {}

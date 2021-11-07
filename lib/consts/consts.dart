@@ -19,3 +19,5 @@ const double composerHeight = 58;
 //Icons
 IconData localSendIcon = Icons.send_rounded;
 IconData localRecordIcon = Icons.mic_none_outlined;
+
+TextEditingController localController = TextEditingController();
