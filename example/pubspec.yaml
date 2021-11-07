@@ -1,6 +1,5 @@
 name: chat_composer_example
 description: Demonstrates how to use the chat_composer plugin.
-
 publish_to: "none"
 
 environment:
