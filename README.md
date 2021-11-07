@@ -4,7 +4,7 @@
 
 A Flutter package for easy implementation of chat composer.
 
-![Gif](https://github.com/anokabb/chat_composer/assets/example.gif "Fancy Gif")
+![Gif](https://github.com/anokabb/chat_composer/blob/main/assets/example.gif "Fancy Gif")
 
 ## Setup
 
