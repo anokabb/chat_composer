@@ -1,3 +1,5 @@
+library chat_composer;
+
 import 'package:chat_composer/consts/consts.dart';
 import 'package:chat_composer/cubit/recordaudio_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

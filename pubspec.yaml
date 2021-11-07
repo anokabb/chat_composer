@@ -1,35 +1,29 @@
 name: chat_composer
-description: A Flutter plugin for easy implementation of chat composer.
+description: A new Flutter project.
 version: 0.0.1
-homepage: https://github.com/anokabb/chat_composer
+homepage:
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_audio_recorder2: ^0.0.2
   bloc: ^7.2.1
-  flutter_bloc: ^7.3.2
+  flutter_bloc: ^7.3.3
   fluttertoast: ^8.0.8
   path_provider: ^2.0.6
   permission_handler: ^8.2.6
   meta: ^1.7.0
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.0
 
 flutter:
-  assets:
-    - assets/delete_icon.png
-  plugin:
-    platforms:
-      android:
-        package: ak.dev.chat_composer
-        pluginClass: ChatComposerPlugin
-      ios:
-        pluginClass: ChatComposerPlugin
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
