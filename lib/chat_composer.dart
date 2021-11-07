@@ -21,7 +21,6 @@ class ChatComposer extends StatefulWidget {
   final List<BoxShadow>? shadow;
   final Color? backgroundColor;
   final Color? composerColor;
-  final Color? actionsColor;
   final Color? sendButtonColor;
   final Color? sendButtonBackgroundColor;
   final Color? lockColor;
@@ -47,7 +46,6 @@ class ChatComposer extends StatefulWidget {
       this.textPadding,
       this.backgroundColor,
       this.composerColor,
-      this.actionsColor,
       this.sendButtonColor,
       this.sendButtonBackgroundColor,
       this.lockColor,
@@ -63,7 +61,6 @@ class ChatComposer extends StatefulWidget {
       : super(key: key) {
     localBackgroundColor = backgroundColor ?? localBackgroundColor;
     localComposerColor = composerColor ?? localComposerColor;
-    localActionsColor = actionsColor ?? localActionsColor;
     localSendButtonColor = sendButtonColor ?? localSendButtonColor;
     localSendButtonBackgroundColor =
         sendButtonBackgroundColor ?? localSendButtonBackgroundColor;

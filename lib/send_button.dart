@@ -267,10 +267,9 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                                     return Align(
                                                         alignment:
                                                             Alignment(0, value),
-                                                        child: Icon(
+                                                        child: const Icon(
                                                           Icons.delete_rounded,
-                                                          color:
-                                                              localActionsColor,
+                                                          color: Colors.grey,
                                                         )
                                                         // Image.asset(
                                                         //   'assets/delete_icon.png',
