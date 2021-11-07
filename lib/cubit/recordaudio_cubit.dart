@@ -15,13 +15,15 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
   final Function()? onRecordStart;
   final Function(String?) onRecordEnd;
   final Function()? onRecordCancel;
+  Duration? maxRecordLength;
 
   ValueNotifier<Duration?> currentDuration = ValueNotifier(Duration.zero);
 
   RecordAudioCubit({
     required this.onRecordEnd,
-    this.onRecordStart,
-    this.onRecordCancel,
+    required this.onRecordStart,
+    required this.onRecordCancel,
+    required this.maxRecordLength,
   }) : super(RecordAudioReady());
 
   void toggleRecord({required bool canRecord}) {
@@ -58,10 +60,13 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
       timer = Timer.periodic(const Duration(milliseconds: 200), (t) async {
         Recording? current = await recorder!.current(channel: 0);
         currentDuration.value = current!.duration;
-        if (current.duration != null) {
-          if (current.duration!.inMilliseconds >= (90 * 1000)) {
-            print('[chat_composer] 🔴 Audio passed max length');
-            stopRecord(context);
+        if (maxRecordLength != null) {
+          if (current.duration != null) {
+            if (current.duration!.inMilliseconds >=
+                maxRecordLength!.inMilliseconds) {
+              print('[chat_composer] 🔴 Audio passed max length');
+              stopRecord(context);
+            }
           }
         }
       });
@@ -101,8 +106,8 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
     try {
       recorder!.stop();
     } catch (e) {}
-    if (onRecordCancel != null) onRecordCancel!();
     emit(RecordAudioReady());
+    if (onRecordCancel != null) onRecordCancel!();
     currentDuration.value = Duration.zero;
   }
 

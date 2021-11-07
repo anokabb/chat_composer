@@ -8,21 +8,39 @@ import 'package:chat_composer/widgets/send_button.dart';
 class ChatComposer extends StatefulWidget {
   final FocusNode? focusNode;
   final TextEditingController? controller;
-  final Widget? leading;
-  final List<Widget>? actions;
   final TextCapitalization? textCapitalization;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final TextStyle? textStyle;
-  final InputDecoration? decoration;
+  final InputDecoration? textFieldDecoration;
   final EdgeInsetsGeometry? textPadding;
+
+  /// A widget to display before the [TextField].
+  final Widget? leading;
+
+  /// A list of Widgets to display in a row after the [TextField] widget.
+  final List<Widget>? actions;
+
+  /// A callback when submit Text Message.
   final Function(String?) onReceiveText;
+
+  /// A callback when start recording.
   final Function()? onRecordStart;
+
+  /// A callback when end recording, return the recorder audio path.
   final Function(String?) onRecordEnd;
+
+  /// A callback when cancel recording.
   final Function()? onRecordCancel;
 
+  /// A callback when the user does not lock the recording or does not hold.
+  final Function()? onPanCancel;
+
+  /// Audio max duration should record then return recorder audio path.
+  final Duration? maxRecordLength;
+
   //Consts
-  final double? borderRadius;
+  final BorderRadius? borderRadius;
   final List<BoxShadow>? shadow;
   final Color? backgroundColor;
   final Color? composerColor;
@@ -51,7 +69,7 @@ class ChatComposer extends StatefulWidget {
     this.textInputAction,
     this.keyboardType,
     this.textStyle,
-    this.decoration,
+    this.textFieldDecoration,
     this.textPadding,
     this.backgroundColor,
     this.composerColor,
@@ -67,6 +85,8 @@ class ChatComposer extends StatefulWidget {
     this.recordIcon,
     this.borderRadius,
     this.shadow,
+    this.maxRecordLength,
+    this.onPanCancel,
   }) : super(key: key) {
     localBackgroundColor = backgroundColor ?? localBackgroundColor;
     localComposerColor = composerColor ?? localComposerColor;
@@ -98,6 +118,7 @@ class _ChatComposerState extends State<ChatComposer>
         onRecordEnd: widget.onRecordEnd,
         onRecordCancel: widget.onRecordCancel,
         onRecordStart: widget.onRecordStart,
+        maxRecordLength: widget.maxRecordLength,
       ),
       child: Container(
         color: localBackgroundColor,
@@ -121,15 +142,14 @@ class _ChatComposerState extends State<ChatComposer>
                           textInputAction: widget.textInputAction,
                           textPadding: widget.textPadding,
                           textStyle: widget.textStyle,
-                          decoration: widget.decoration,
+                          decoration: widget.textFieldDecoration,
                           leading: widget.leading,
                           actions: widget.actions,
                         ),
                         margin: EdgeInsets.zero,
                         decoration: BoxDecoration(
                             color: localComposerColor,
-                            borderRadius:
-                                BorderRadius.circular(localborderRadius),
+                            borderRadius: localborderRadius,
                             boxShadow: widget.shadow),
                       ),
                     ),
@@ -144,6 +164,7 @@ class _ChatComposerState extends State<ChatComposer>
                 child: SendButton(
                   composerHeight: composerHeight,
                   onReceiveText: widget.onReceiveText,
+                  onPanCancel: widget.onPanCancel,
                 ),
               ),
             ],

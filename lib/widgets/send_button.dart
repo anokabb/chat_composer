@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:chat_composer/consts/consts.dart';
 import 'package:chat_composer/cubit/recordaudio_cubit.dart';
 import 'package:chat_composer/utils/utils.dart';
@@ -11,8 +10,12 @@ enum DragAxis { horizontal, vertical }
 
 class SendButton extends StatefulWidget {
   final Function(String?) onReceiveText;
+  final Function()? onPanCancel;
   final double composerHeight;
-  const SendButton({required this.composerHeight, required this.onReceiveText});
+  const SendButton(
+      {required this.composerHeight,
+      required this.onReceiveText,
+      this.onPanCancel});
 
   @override
   _SendButtonState createState() => _SendButtonState();
@@ -111,11 +114,11 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
 
               return;
             }
-            dragLocked.value = false;
-            context.read<RecordAudioCubit>().startRecord(context);
             stopwatch.stop();
             stopwatch.reset();
             stopwatch.start();
+            dragLocked.value = false;
+            context.read<RecordAudioCubit>().startRecord(context);
           },
           onPanUpdate: (d) {
             if (dragCanceled || dragLocked.value) return;
@@ -159,16 +162,20 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                 context.read<RecordAudioCubit>().stopRecord(context);
               } else {
                 dragCanceled = true;
+                if (widget.onPanCancel != null) {
+                  widget.onPanCancel!();
+                } else {
+                  Fluttertoast.cancel();
+                  Fluttertoast.showToast(
+                      msg: "Hold to record",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.grey.withOpacity(0.8),
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                }
                 context.read<RecordAudioCubit>().cancelRecord();
-                Fluttertoast.cancel();
-                Fluttertoast.showToast(
-                    msg: "Hold to record",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.grey.withOpacity(0.8),
-                    textColor: Colors.white,
-                    fontSize: 16.0);
               }
               stopwatch.stop();
               stopwatch.reset();

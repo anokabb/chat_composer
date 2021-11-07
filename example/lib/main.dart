@@ -24,18 +24,8 @@ class _MyAppState extends State<MyApp> {
           children: [
             const Expanded(child: Text('Running on: ')),
             ChatComposer(
-              onRecordCancel: () {
-                print('onRecordCancel');
-              },
-              onRecordStart: () {
-                print('onRecordStart');
-              },
-              onRecordEnd: (dddd) {
-                print('onReceiveAudio :::::   $dddd');
-              },
-              onReceiveText: (str) {
-                print('ddddddddd :::::   $str');
-              },
+              onRecordEnd: (dddd) {},
+              onReceiveText: (str) {},
             ),
           ],
         ),
