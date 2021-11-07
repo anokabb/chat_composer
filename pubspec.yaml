@@ -1,7 +1,7 @@
 name: chat_composer
-description: A new Flutter project.
+description: A Flutter package for easy implementation of chat composer.
 version: 0.0.1
-homepage:
+homepage: https://github.com/anokabb/chat_composer
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -24,6 +24,5 @@ dev_dependencies:
   flutter_lints: ^1.0.0
 
 flutter:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - packages/chat_composer/images/delete_icon.png

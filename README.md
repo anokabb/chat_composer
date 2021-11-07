@@ -1,39 +1,79 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# chat_composer
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+[pub package](https://pub.dartlang.org/packages/chat_composer)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+A Flutter package for easy implementation of chat composer.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+![Gif](https://github.com/anokabb/chat_composer/assets/example.gif "Fancy Gif")
 
-## Features
+## Setup
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+### Android
 
-## Getting started
+**Permissions**
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+```
+    ...
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    ...
+   <application
 ```
 
-## Additional information
+**AndroidX**
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+1. Add the following to your "gradle.properties" file:
+
+```
+android.useAndroidX=true
+android.enableJetifier=true
+```
+
+2. Make sure you set the `compileSdkVersion` in your "android/app/build.gradle" file to 31:
+
+```
+android {
+  compileSdkVersion 31
+  ...
+}
+```
+
+3. Make sure you replace all the `android.` dependencies to their AndroidX counterparts (a full list can be found here: https://developer.android.com/jetpack/androidx/migrate ).
+
+### Add dependency
+
+```yaml
+dependencies:
+  chat_composer: ^0.0.1 #latest version
+```
+
+### Import
+
+```dart
+import 'package:chat_composer/chat_composer.dart';
+```
+
+### Easy to use
+
+```dart
+ChatComposer(
+    onReceiveText: (str) {
+    print('TEXT : ' + str!);
+    },
+    onRecordEnd: (path) {
+    print('AUDIO PATH : ' + path!);
+    },
+)
+```
+
+### Attributes
+
+`leading`: A widget to display before the [TextField].\
+`actions`: A list of Widgets to display in a row after the [TextField] widget.\
+`onReceiveText`: A callback when submit Text Message.\
+`onRecordStart`: A callback when start recording.\
+`onRecordEnd`: A callback when end recording, return the recorder audio path.\
+`onRecordCancel`: A callback when cancel recording.\
+`onPanCancel`: A callback when the user does not lock the recording or does not hold.\
+`maxRecordLength`: Audio max duration should record then return recorder audio path.\

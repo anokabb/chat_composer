@@ -273,19 +273,15 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                                       deletePosListener,
                                                   builder: (_, value, __) {
                                                     return Align(
-                                                        alignment:
-                                                            Alignment(0, value),
-                                                        child: const Icon(
-                                                          Icons.delete_rounded,
-                                                          color: Colors.grey,
-                                                        )
-                                                        // Image.asset(
-                                                        //   'assets/delete_icon.png',
-                                                        //   width: 40,
-                                                        //   height: 40,
-                                                        //   color: Colors.grey,
-                                                        // ),
-                                                        );
+                                                      alignment:
+                                                          Alignment(0, value),
+                                                      child: Image.asset(
+                                                        'packages/chat_composer/images/delete_icon.png',
+                                                        width: 40,
+                                                        height: 40,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    );
                                                   }),
                                             ],
                                           ),

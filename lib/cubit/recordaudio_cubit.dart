@@ -78,7 +78,9 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
   }
 
   void stopRecord(BuildContext context) async {
-    timer.cancel();
+    try {
+      timer.cancel();
+    } catch (e) {}
     try {
       Recording? result = await recorder!.stop();
       if (result != null) {
