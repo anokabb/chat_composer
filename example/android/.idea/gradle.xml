@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="GRADLE" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_audio_recorder2-0.0.2/android" />
+            <option value="C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.0.8/android" />
+            <option value="C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.6/android" />
+            <option value="C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-8.2.6/android" />
+            <option value="$PROJECT_DIR$/../../android" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

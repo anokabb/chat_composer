@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1876865848/android.chat_composer.iml" filepath="$PROJECT_DIR$/.idea/modules/-1876865848/android.chat_composer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1045829943/android.flutter_audio_recorder2.iml" filepath="$PROJECT_DIR$/.idea/modules/-1045829943/android.flutter_audio_recorder2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1302025098/android.fluttertoast.iml" filepath="$PROJECT_DIR$/.idea/modules/1302025098/android.fluttertoast.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/709613938/android.path_provider.iml" filepath="$PROJECT_DIR$/.idea/modules/709613938/android.path_provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1438252057/android.permission_handler.iml" filepath="$PROJECT_DIR$/.idea/modules/1438252057/android.permission_handler.iml" />
+    </modules>
+  </component>
+</project>
