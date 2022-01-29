@@ -3,7 +3,7 @@
 [pub package](https://pub.dartlang.org/packages/chat_composer)
 
 <p align="center">
-<a href="https://www.buymeacoffee.com/anokab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/anokab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 </p>
 
 A Flutter package for easy implementation of chat composer.
