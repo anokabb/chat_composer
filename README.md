@@ -2,10 +2,6 @@
 
 [pub package](https://pub.dartlang.org/packages/chat_composer)
 
-<p align="center">
-<a href="https://www.buymeacoffee.com/anokab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 100px !important;" ></a>
-</p>
-
 A Flutter package for easy implementation of chat composer.
 
 ![Gif](https://github.com/anokabb/chat_composer/blob/main/assets/example.gif "Fancy Gif")
@@ -80,4 +76,8 @@ ChatComposer(
 `onRecordEnd`: A callback when end recording, return the recorder audio path.\
 `onRecordCancel`: A callback when cancel recording.\
 `onPanCancel`: A callback when the user does not lock the recording or does not hold.\
-`maxRecordLength`: Audio max duration should record then return recorder audio path.\
+`maxRecordLength`: Audio max duration should record then return recorder audio path.
+
+<p align="center">
+<a href="https://www.buymeacoffee.com/anokab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
