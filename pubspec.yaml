@@ -1,6 +1,6 @@
 name: chat_composer
 description: A Flutter package for easy implementation of chat composer.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/anokabb/chat_composer
 
 environment:
