@@ -2,7 +2,7 @@
 
 [pub package](https://pub.dartlang.org/packages/chat_composer)
 
-A Flutter package for easy implementation of chat composer.
+A Flutter package for easy implementation of chat composer allows users to chat with Text, Audio, and Other Media.
 
 ![Gif](https://github.com/anokabb/chat_composer/blob/main/assets/example.gif "Fancy Gif")
 
