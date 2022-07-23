@@ -1,3 +1,3 @@
-## 0.0.1
+## 1.0.2
 
-* TODO: Describe initial release.
+- TODO: fix sound issue and update dependencies.
