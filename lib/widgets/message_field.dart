@@ -16,6 +16,7 @@ class MessageField extends StatefulWidget {
   final EdgeInsetsGeometry? textPadding;
 
   const MessageField({
+    Key? key,
     this.actions,
     this.focusNode,
     this.controller,
@@ -26,9 +27,10 @@ class MessageField extends StatefulWidget {
     this.textStyle,
     this.decoration,
     this.textPadding,
-  });
+  }) : super(key: key);
+
   @override
-  _MessageFieldState createState() => _MessageFieldState();
+  State<MessageField> createState() => _MessageFieldState();
 }
 
 class _MessageFieldState extends State<MessageField> {

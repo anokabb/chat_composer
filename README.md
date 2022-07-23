@@ -8,7 +8,7 @@ A Flutter package for easy implementation of chat composer.
 
 ## Setup
 
-### Android
+## Android
 
 **Permissions**
 
@@ -30,22 +30,35 @@ android.useAndroidX=true
 android.enableJetifier=true
 ```
 
-2. Make sure you set the `compileSdkVersion` in your "android/app/build.gradle" file to 31:
+2. Make sure you set the `compileSdkVersion` in your "android/app/build.gradle" file to 33 or higher:
 
 ```
 android {
-  compileSdkVersion 31
+  compileSdkVersion 33
   ...
 }
 ```
 
-3. Make sure you replace all the `android.` dependencies to their AndroidX counterparts (a full list can be found here: https://developer.android.com/jetpack/androidx/migrate ).
+3. Make sure you set the `minSdkVersion` in your "android/app/build.gradle" file to 18 or higher:
 
-### Add dependency
+```
+defaultConfig {
+  minSdkVersion 18
+  ...
+}
+```
+
+4. Make sure you replace all the `android.` dependencies to their AndroidX counterparts (a full list can be found here: https://developer.android.com/jetpack/androidx/migrate ).
+
+## IOS
+
+I'm working on the iOS version until then you can support me by buying me a cup of coffee 🙂
+
+## Add dependency
 
 ```yaml
 dependencies:
-  chat_composer: ^1.0.0 #latest version
+  chat_composer: ^1.0.2 #latest version
 ```
 
 ### Import

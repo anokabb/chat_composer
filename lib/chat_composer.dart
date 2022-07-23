@@ -6,15 +6,6 @@ import 'package:flutter/material.dart';
 import 'widgets/send_button.dart';
 
 class ChatComposer extends StatefulWidget {
-  final FocusNode? focusNode;
-  final TextEditingController? controller;
-  final TextCapitalization? textCapitalization;
-  final TextInputAction? textInputAction;
-  final TextInputType? keyboardType;
-  final TextStyle? textStyle;
-  final InputDecoration? textFieldDecoration;
-  final EdgeInsetsGeometry? textPadding;
-
   /// A widget to display before the [TextField].
   final Widget? leading;
 
@@ -39,20 +30,70 @@ class ChatComposer extends StatefulWidget {
   /// Audio max duration should record then return recorder audio path.
   final Duration? maxRecordLength;
 
-  //Consts
+  /// focusNode
+  final FocusNode? focusNode;
+
+  /// controller
+  final TextEditingController? controller;
+
+  /// textCapitalization
+  final TextCapitalization? textCapitalization;
+
+  /// textInputAction
+  final TextInputAction? textInputAction;
+
+  /// keyboardType
+  final TextInputType? keyboardType;
+
+  /// textStyle
+  final TextStyle? textStyle;
+
+  /// textFieldDecoration
+  final InputDecoration? textFieldDecoration;
+
+  /// textPadding
+  final EdgeInsetsGeometry? textPadding;
+
+  /// borderRadius
   final BorderRadius? borderRadius;
+
+  /// shadow
   final List<BoxShadow>? shadow;
+
+  /// backgroundColor
   final Color? backgroundColor;
+
+  /// composerColor
   final Color? composerColor;
+
+  /// sendButtonColor
   final Color? sendButtonColor;
+
+  /// sendButtonBackgroundColor
   final Color? sendButtonBackgroundColor;
+
+  /// lockColor
   final Color? lockColor;
+
+  /// lockBackgroundColor
   final Color? lockBackgroundColor;
+
+  /// recordIconColor
   final Color? recordIconColor;
+
+  /// deleteButtonColor
   final Color? deleteButtonColor;
+
+  /// textColor
   final Color? textColor;
+
+  /// padding
   final EdgeInsetsGeometry? padding;
+
+  /// sendIcon
   final IconData? sendIcon;
+
+  /// recordIcon
   final IconData? recordIcon;
 
   ChatComposer({
@@ -106,7 +147,7 @@ class ChatComposer extends StatefulWidget {
   }
 
   @override
-  _ChatComposerState createState() => _ChatComposerState();
+  State<ChatComposer> createState() => _ChatComposerState();
 }
 
 class _ChatComposerState extends State<ChatComposer>
@@ -134,6 +175,11 @@ class _ChatComposerState extends State<ChatComposer>
                       constraints:
                           const BoxConstraints(minHeight: composerHeight),
                       child: Container(
+                        margin: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                            color: localComposerColor,
+                            borderRadius: localborderRadius,
+                            boxShadow: widget.shadow),
                         child: MessageField(
                           controller: localController,
                           focusNode: widget.focusNode,
@@ -146,11 +192,6 @@ class _ChatComposerState extends State<ChatComposer>
                           leading: widget.leading,
                           actions: widget.actions,
                         ),
-                        margin: EdgeInsets.zero,
-                        decoration: BoxDecoration(
-                            color: localComposerColor,
-                            borderRadius: localborderRadius,
-                            boxShadow: widget.shadow),
                       ),
                     ),
                   ),

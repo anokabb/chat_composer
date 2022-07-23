@@ -37,13 +37,13 @@ class _MyAppState extends State<MyApp> {
               controller: con,
               onReceiveText: (str) {
                 setState(() {
-                  list.add('TEXT : ' + str!);
+                  list.add('TEXT : ${str!}');
                   con.text = '';
                 });
               },
               onRecordEnd: (path) {
                 setState(() {
-                  list.add('AUDIO PATH : ' + path!);
+                  list.add('AUDIO PATH : ${path!}');
                 });
               },
               textPadding: EdgeInsets.zero,

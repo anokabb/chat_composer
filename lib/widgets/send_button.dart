@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../consts/consts.dart';
 import '../cubit/recordaudio_cubit.dart';
 import '../utils/utils.dart';
@@ -12,13 +14,16 @@ class SendButton extends StatefulWidget {
   final Function(String?) onReceiveText;
   final Function()? onPanCancel;
   final double composerHeight;
+
   const SendButton(
-      {required this.composerHeight,
+      {Key? key,
+      required this.composerHeight,
       required this.onReceiveText,
-      this.onPanCancel});
+      this.onPanCancel})
+      : super(key: key);
 
   @override
-  _SendButtonState createState() => _SendButtonState();
+  State<SendButton> createState() => _SendButtonState();
 }
 
 class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
@@ -212,6 +217,12 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                     children: [
                       if (state is RecordAudioStarted)
                         Container(
+                          margin:
+                              EdgeInsets.only(right: widget.composerHeight + 8),
+                          decoration: BoxDecoration(
+                              color: localComposerColor,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(18))),
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
@@ -326,12 +337,6 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                               ),
                             ],
                           ),
-                          margin:
-                              EdgeInsets.only(right: widget.composerHeight + 8),
-                          decoration: BoxDecoration(
-                              color: localComposerColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(18))),
                         ),
                       Align(
                         alignment: Alignment(1, lockPos),
@@ -348,12 +353,12 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                                           ? 0
                                           : ((value / 2)),
                                   child: Card(
+                                    shape: const CircleBorder(),
+                                    color: localLockBackgroundColor,
                                     child: Icon(
                                       Icons.lock_outline,
                                       color: localLockColor,
                                     ),
-                                    shape: const CircleBorder(),
-                                    color: localLockBackgroundColor,
                                   ),
                                 );
                               }),
@@ -368,10 +373,10 @@ class _SendButtonState extends State<SendButton> with TickerProviderStateMixin {
                             onTap: () {
                               String msg = localController.text.trim();
                               if (msg.isNotEmpty) {
-                                print('[chat_composer] 🟢 text "$msg"');
+                                log('[chat_composer] 🟢 text "$msg"');
                                 widget.onReceiveText(msg);
                               } else {
-                                print('[chat_composer] 🔴 Text Empty');
+                                log('[chat_composer] 🔴 Text Empty');
                               }
                             },
                           ),
@@ -423,7 +428,9 @@ class SendType extends StatelessWidget {
   final Function()? onTap;
   final IconData? icon;
 
-  const SendType({required this.height, this.onTap, @required this.icon});
+  const SendType(
+      {Key? key, required this.height, this.onTap, @required this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -432,14 +439,14 @@ class SendType extends StatelessWidget {
       child: Container(
         width: height - 8,
         height: height - 8,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: localSendButtonBackgroundColor,
+        ),
         child: Icon(
           icon,
           color: localSendButtonColor,
           size: 28,
-        ),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: localSendButtonBackgroundColor,
         ),
       ),
     );
