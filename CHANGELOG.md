@@ -1,3 +1,3 @@
-## 1.0.2
+## 1.0.3
 
-- TODO: fix sound issue and update dependencies.
+- Fix sound issue and update dependencies.

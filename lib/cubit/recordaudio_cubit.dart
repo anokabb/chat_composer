@@ -17,7 +17,7 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
   Duration? maxRecordLength;
 
   ValueNotifier<Duration?> currentDuration = ValueNotifier(Duration.zero);
-  StreamSubscription? recorderStream;
+  late StreamSubscription? recorderStream;
 
   RecordAudioCubit({
     required this.onRecordEnd,
@@ -109,6 +109,7 @@ class RecordAudioCubit extends Cubit<RecordaudioState> {
     } catch (e) {
       //ignore
     }
+    if (recorderStream != null) recorderStream!.cancel();
     try {
       // _myRecorder = null;
       // timer.cancel();
